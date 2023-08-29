@@ -281,8 +281,7 @@ function isCreditCardNumber(ccn) {
     if (index % 2) {
       let doubleCurrent = current * 2;
       if (doubleCurrent >= 10) {
-        doubleCurrent =
-          +doubleCurrent.toString()[0] + +doubleCurrent.toString()[1];
+        doubleCurrent = +doubleCurrent.toString()[0] + +doubleCurrent.toString()[1];
       }
       return sum + +doubleCurrent;
     }
@@ -311,7 +310,7 @@ function isCreditCardNumber(ccn) {
 function getDigitalRoot(num) {
   const newNum = [...num.toString()].reduce(
     (sum, current) => sum + +current,
-    0
+    0,
   );
   if (!(newNum.toString().length > 1)) {
     return newNum;
@@ -399,7 +398,8 @@ function toNaryString(num, n) {
 function getCommonDirectoryPath(pathes) {
   let part = '';
   let i = 0;
-  while (pathes.every((path) => path.startsWith(part))) {
+  const startsWithPath = () => pathes.every((path) => path.startsWith(part));
+  while (startsWithPath()) {
     part = pathes[0].slice(0, i);
     i += 1;
   }
