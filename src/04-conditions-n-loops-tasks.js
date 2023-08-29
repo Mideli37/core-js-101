@@ -6,7 +6,6 @@
  *                                                                                                *
  ************************************************************************************************ */
 
-
 /**
  * Returns the 'Fizz','Buzz' or an original number using the following rules:
  * 1) return original number
@@ -98,7 +97,6 @@ function isTriangle(a, b, c) {
   return a + b > c && a + c > b && b + c > a;
 }
 
-
 /**
  * Returns true, if two specified axis-aligned rectangles overlap, otherwise false.
  * Each rectangle representing by object
@@ -141,7 +139,6 @@ function doRectanglesOverlap(rect1, rect2) {
   return true;
 }
 
-
 /**
  * Returns true, if point lies inside the circle, otherwise false.
  * Circle is an object of
@@ -174,7 +171,6 @@ function isInsideCircle(circle, point) {
   const pointCenter = Math.hypot(aSide, bSide);
   return pointCenter < circle.radius;
 }
-
 
 /**
  * Returns the first non repeated char in the specified strings otherwise returns null.
@@ -227,7 +223,6 @@ function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
   return result;
 }
 
-
 /**
  * Reverse the specified string (put all chars in reverse order)
  *
@@ -244,7 +239,6 @@ function reverseString(str) {
   return [...str].reverse().join('');
 }
 
-
 /**
  * Reverse the specified integer number (put all digits in reverse order)
  *
@@ -260,7 +254,6 @@ function reverseString(str) {
 function reverseInteger(num) {
   return +[...num.toString()].reverse().join('');
 }
-
 
 /**
  * Validates the CCN (credit card number) and return true if CCN is valid
@@ -288,7 +281,8 @@ function isCreditCardNumber(ccn) {
     if (index % 2) {
       let doubleCurrent = current * 2;
       if (doubleCurrent >= 10) {
-        doubleCurrent = +doubleCurrent.toString()[0] + +doubleCurrent.toString()[1];
+        doubleCurrent =
+          +doubleCurrent.toString()[0] + +doubleCurrent.toString()[1];
       }
       return sum + +doubleCurrent;
     }
@@ -316,14 +310,14 @@ function isCreditCardNumber(ccn) {
  */
 function getDigitalRoot(num) {
   const newNum = [...num.toString()].reduce(
-    (sum, current) => sum + +current, 0,
+    (sum, current) => sum + +current,
+    0
   );
   if (!(newNum.toString().length > 1)) {
     return newNum;
   }
   return getDigitalRoot(newNum);
 }
-
 
 /**
  * Returns true if the specified string has the balanced brackets and false otherwise.
@@ -366,7 +360,6 @@ function isBracketsBalanced(str) {
   return Boolean(!string);
 }
 
-
 /**
  * Returns the string with n-ary (binary, ternary, etc, where n <= 10)
  * representation of specified number.
@@ -391,7 +384,6 @@ function toNaryString(num, n) {
   return num.toString(n);
 }
 
-
 /**
  * Returns the common directory path for specified array of full filenames.
  *
@@ -404,26 +396,17 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
-/*   const firstPath = pathes[0];
-  let commonPath = '';
+function getCommonDirectoryPath(pathes) {
+  let part = '';
   let i = 0;
-  while (
-    pathes.filter((path) => path.startsWith(commonPath)).length ===
-    pathes.length
-  ) {
-    commonPath = firstPath.substring(0, i);
+  while (pathes.every((path) => path.startsWith(part))) {
+    part = pathes[0].slice(0, i);
     i += 1;
-    console.log(commonPath);
   }
-  console.log(i);
-  commonPath = i === 2 ? '' : firstPath.substring(0, i - 2);
-  return commonPath.includes('/')
-    ? commonPath.substring(0, commonPath.lastIndexOf('/') + 1)
-    : commonPath; */
+  part = part.slice(0, -1);
+  part.lastIndexOf('/');
+  return part.length === 0 ? '' : part.slice(0, part.lastIndexOf('/') + 1);
 }
-
 
 /**
  * Returns the product of two specified matrixes.
@@ -438,15 +421,33 @@ function getCommonDirectoryPath(/* pathes */) {
  *    [ 0, 1, 0 ],   X    [ 4, 5, 6 ],     =>     [ 4, 5, 6 ],
  *    [ 0, 0, 1 ]]        [ 7, 8, 9 ]]            [ 7, 8, 9 ]]
  *
+ * m1[1][1] * m2[1][1] +
+ * m1[1][2] * m2[2][1] +
+ * m1[1][3] * m2[3][1] - первый элемент - m3[1][1]
+ *
+ * m1[1][1] * m2[1][2] +
+ * m1[1][2] * m2[2][2] +
+ * m1[1][3] * m2[3][2] - второй элемент - m3[1][2]
+ *
  *                        [[ 4 ],
  *   [[ 1, 2, 3]]    X     [ 5 ],          =>     [[ 32 ]]
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const result = [];
+  for (let i = 0; i < m1.length; i += 1) {
+    result.push([]);
+    for (let j = 0; j < m2.length; j += 1) {
+      let sum = 0;
+      for (let k = 0; k < m2.length; k += 1) {
+        sum += m1[i][k] * m2[k][j];
+      }
+      if (sum) result[i].push(sum);
+    }
+  }
+  return result;
 }
-
 
 /**
  * Returns the evaluation of the specified tic-tac-toe position.
@@ -507,7 +508,6 @@ function evaluateTicTacToePosition(position) {
   }
   return null;
 }
-
 
 module.exports = {
   getFizzBuzz,
